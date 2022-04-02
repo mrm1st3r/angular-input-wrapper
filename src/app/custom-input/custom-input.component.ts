@@ -1,33 +1,49 @@
-import { Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
-import { AbstractControl, ControlContainer, ControlValueAccessor, FormControl, FormControlDirective, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { Component, forwardRef, Host, Injector, Input, Optional, ViewChild } from '@angular/core';
+import { AbstractControl, ControlContainer, ControlValueAccessor, DefaultValueAccessor, FormControl, FormGroupDirective, NgControl, NgForm, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-custom-input',
   templateUrl: './custom-input.component.html',
-  styleUrls: ['./custom-input.component.css']
+  styleUrls: ['./custom-input.component.css'],
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CustomInputComponent), multi: true}
+  ]
 })
 export class CustomInputComponent implements ControlValueAccessor {
 
 
-    // this directive is bound to the native `input` element when attaching a `formControl` property
-    @ViewChild(FormControlDirective, {static: true})
-    formControlDirective: FormControlDirective;
+    @Input()
+    label: string;
 
     @Input()
-    formControl: FormControl;
-
-    @Input()
-    formControlName: string;
-
-    constructor(@Optional() private readonly controlContainer: ControlContainer) {
+    set required(value: boolean) {
+      this._required = value;
     }
 
-    /* Get hold of FormControl instance no matter formControl or formControlName is given.
-       If formControlName is given, then this.controlContainer.control is the parent FormGroup (or FormArray) instance.
-       TODO: Check how this works with template-driven forms
+    private _required = false;
+
+    // this directive is bound to the native `input` element when attaching a `formControl` property
+    @ViewChild(DefaultValueAccessor, {static: true})
+    valueAccessor: DefaultValueAccessor;
+
+    constructor(
+      @Optional() @Host() private readonly controlContainer: ControlContainer,
+      private readonly injector: Injector
+      ) {
+    }
+
+    /* Get hold of FormControl instance from the accompanying NgControl directive.
+     * An concrete instance of that abstract direcive will be created,
+     * no matter if reactive or template-driven forms are used.
+     * 
+     * It needs to be fetched manually via the injector to avoid a circular dependency error.
+     * 
+     * TODO: Think about caching with a local variable
+     * TODO: Make sure there's no memory leak with that.
      */
     get control(): FormControl {
-        return this.formControl || !!this.formControlName && this.controlContainer?.control.get(this.formControlName) as FormControl;
+        const ngControl = this.injector.get(NgControl);
+        return ngControl.control as FormControl;
     }
 
     get disabled(): boolean {
@@ -35,8 +51,7 @@ export class CustomInputComponent implements ControlValueAccessor {
     }
 
     get required(): boolean {
-      return false;
-        //return this.control?.hasValidator(Validators.required);
+      return this._required || this.control?.hasValidator(Validators.required);
     }
 
     get errorState(): boolean {
@@ -47,19 +62,19 @@ export class CustomInputComponent implements ControlValueAccessor {
     // actual ControlValueAccessor methods that directly call the `FormControlDirective` on the native element.
 
     registerOnChange(fn: any): void {
-        this.formControlDirective.valueAccessor.registerOnChange(fn);
+        this.valueAccessor.registerOnChange(fn);
     }
 
     registerOnTouched(fn: any): void {
-        this.formControlDirective.valueAccessor.registerOnTouched(fn);
+        this.valueAccessor.registerOnTouched(fn);
     }
 
     writeValue(obj: any): void {
-        this.formControlDirective.valueAccessor.writeValue(obj);
+        this.valueAccessor.writeValue(obj);
     }
 
     setDisabledState(isDisabled: boolean): void {
-        this.formControlDirective.valueAccessor.setDisabledState(isDisabled);
+        this.valueAccessor.setDisabledState(isDisabled);
     }
 }
 

@@ -1,3 +1,4 @@
-<div class="custom-input">
-    <input [formControl]="control" />
+<div class="custom-input" [class.invalid]="errorState">
+    <label>{{ label }}<ng-container *ngIf="required">*</ng-container></label><br />
+    <input ngDefaultControl />
 </div>

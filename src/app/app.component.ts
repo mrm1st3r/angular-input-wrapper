@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-forms';
+
+  model: string;
+
+  control = new FormControl(null, [Validators.required]);
+
+  updateValues(value: string) {
+    this.model = value;
+    this.control.setValue(value);
+  }
+
 }
