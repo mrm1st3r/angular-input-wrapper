@@ -1,18 +1,44 @@
 <div style="width: 800px; margin: 0 auto;">
-<h1>Angular Forms custom inputs</h1>
+    <h1>Angular Forms custom inputs</h1>
 
-Set values:
-<button (click)="updateValues('Value')">Value</button>
-<button (click)="updateValues('foo bar')">foo bar</button>
-<button (click)="updateValues('')">(empty)</button>
+    <h2>Text inputs</h2>
 
-<hr/>
+    <p>Set values:
+        <button (click)="updateValues('Value')">Value</button>
+        &nbsp;<button (click)="updateValues('foo bar')">foo bar</button>
+        &nbsp;<button (click)="updateValues('')">(empty)</button>
+    </p>
 
-<app-custom-input label="template-driven" [(ngModel)]="model" required="true"></app-custom-input>
-value is: {{model}}
+    <p>
+        <app-custom-input label="template-driven" [(ngModel)]="model" required="true"></app-custom-input>
+        value is: {{model}}
+    </p>
 
-<hr />
 
-<app-custom-input label="reactive" [formControl]="control"></app-custom-input>
-value is: {{control.value}}
+    <p>
+        <app-custom-input label="reactive" [formControl]="control"></app-custom-input>
+        value is: {{control.value}}
+    </p>
+
+
+    <h2>Radio buttons</h2>
+
+    <p>
+        template-driven<br />
+        <input type="radio" [(ngModel)]="radio" value="foo" name="template-radio" /><br />
+        <input type="radio" [(ngModel)]="radio" value="bar" name="template-radio" /><br />
+        value is: {{radio}}
+    </p>
+
+    <p>
+        reactive<br />
+        <input type="radio" [formControl]="radioControl" [value]="foo" name="reactive-radio" /><br />
+        <input type="radio" [formControl]="radioControl" [value]="bar" name="reactive-radio" /><br />
+        <input type="radio" [formControl]="radioControl" value="123" name="reactive-radio" /><br />
+        <input type="radio" [formControl]="radioControl" value="456" name="reactive-radio" /><br />
+        value is: {{radioControl.value}}
+    </p>
+
+    <app-wrapper [foo]="'foo'" [bar]="'bar'" [radioControl]="wrapperControl"></app-wrapper>
+
 </div>

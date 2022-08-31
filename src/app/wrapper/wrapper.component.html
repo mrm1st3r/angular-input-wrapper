@@ -1,0 +1,8 @@
+<p>
+    reactive inside wrapper component<br />
+    <input type="radio" [formControl]="radioControl" [value]="foo" name="wrapped-radio" /><br />
+    <input type="radio" [formControl]="radioControl" [value]="bar" name="wrapped-radio" /><br />
+    <input type="radio" [formControl]="radioControl" value="123" name="wrapped-radio" /><br />
+    <input type="radio" [formControl]="radioControl" value="456" name="wrapped-radio" /><br />
+    value is: {{radioControl.value}}
+</p>

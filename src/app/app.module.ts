@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { CustomInputComponent } from './custom-input/custom-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { WrapperComponent } from './wrapper/wrapper.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CustomInputComponent
+    CustomInputComponent,
+    WrapperComponent
   ],
   imports: [
     BrowserModule,

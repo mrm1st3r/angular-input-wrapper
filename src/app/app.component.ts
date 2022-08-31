@@ -9,10 +9,16 @@ import { FormControl, Validators } from '@angular/forms';
 export class AppComponent {
 
   model: string;
-
   control = new FormControl(null, [Validators.required]);
 
-  updateValues(value: string) {
+  foo = 'foo';
+  bar = 'bar';
+
+  radio: string;
+  radioControl = new FormControl('foo', [Validators.required]);
+  wrapperControl = new FormControl('foo', [Validators.required]);
+
+  updateValues(value: string): void {
     this.model = value;
     this.control.setValue(value);
   }
