@@ -1,4 +1,8 @@
-<div class="custom-input" [class.invalid]="errorState">
-    <label>{{ label }}<ng-container *ngIf="required">*</ng-container></label><br />
-    <input ngDefaultControl />
+<div
+  class="custom-input"
+  [class.invalid]="errorState"
+  [class.disabled]="disabled"
+>
+    <label [for]="id">{{ label }}<ng-container *ngIf="required">*</ng-container></label><br />
+    <input ngDefaultControl [id]="id" />
 </div>
