@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-wrapper',
@@ -15,7 +15,7 @@ export class WrapperComponent implements OnInit {
   bar: string;
 
   @Input()
-  radioControl: FormControl;
+  radioControl: UntypedFormControl;
 
   constructor() { }
 

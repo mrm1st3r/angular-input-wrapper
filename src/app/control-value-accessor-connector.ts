@@ -1,4 +1,4 @@
-import { ControlContainer, ControlValueAccessor, DefaultValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
+import { ControlContainer, ControlValueAccessor, DefaultValueAccessor, UntypedFormControl, NgControl, Validators } from '@angular/forms';
 import { Directive, Host, Injector, Input, Optional, ViewChild } from '@angular/core';
 import { errorState } from './error-state';
 
@@ -44,9 +44,9 @@ export class ControlValueAccessorConnector implements ControlValueAccessor {
      *
      * It needs to be fetched manually via the injector to avoid a circular dependency error.
      */
-    get control(): FormControl|null {
+    get control(): UntypedFormControl|null {
         const ngControl: NgControl = this.injector.get(NgControl, null);
-        return ngControl?.control as FormControl;
+        return ngControl?.control as UntypedFormControl;
     }
 
     get disabled(): boolean {

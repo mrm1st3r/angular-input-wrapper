@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +9,14 @@ import { FormControl, Validators } from '@angular/forms';
 export class AppComponent {
 
   model: string;
-  control = new FormControl({value: null, disabled: false}, [Validators.required]);
+  control = new UntypedFormControl({value: null, disabled: false}, [Validators.required]);
 
   foo = 'foo';
   bar = 'bar';
 
   radio: string;
-  radioControl = new FormControl({value: 'foo', disabled: true}, [Validators.required]);
-  wrapperControl = new FormControl('foo', [Validators.required]);
+  radioControl = new UntypedFormControl({value: 'foo', disabled: true}, [Validators.required]);
+  wrapperControl = new UntypedFormControl('foo', [Validators.required]);
 
   updateValues(value: string): void {
     this.model = value;
